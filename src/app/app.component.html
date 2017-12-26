@@ -1,4 +1,5 @@
 
+
 <input type="text" [(ngModel)]="title" name="title" placeholder="Title..">
 <br>
 <textarea [(ngModel)]="content" name="content" placeholder="Content.."></textarea>
@@ -6,10 +7,26 @@
 <input type="submit" value="Add a Post" (click)="addPost()">
 <br>
 
-<ul *ngFor='let post of posts | async'>
+
+
+<h1>A specific post:</h1>
+
+<h3>{{ (singlePost | async)?.title }}</h3>
+<p>{{ (singlePost | async)?.content }}</p>
+
+
+
+<ul *ngFor="let post of posts | async">
+  <li (click)="getPost(post.id)">
+    <strong>{{ post.data.title}}</strong> (<a href="#" (click)="deletePost(post.id)">delete</a>)
+    <br>
+    {{post.data.content}}
+  </li>
+</ul>
+
+<h3>Notifications:</h3>
+<ul *ngFor='let message of messages | async'>
   <li>
-      <strong> {{post.title}} </strong>
-      <br>
-      {{post.content}}
+      {{message.message}}
   </li>
 </ul>
