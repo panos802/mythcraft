@@ -4,6 +4,7 @@
 <br>
 <textarea [(ngModel)]="content" name="content" placeholder="Content.."></textarea>
 <br>
+<input type="number" [(ngModel)]="ref" min="0" max="10" step="1">
 <input type="submit" value="Add a Post" (click)="addPost()">
 <br>
 
@@ -12,7 +13,7 @@
   <li (click)="getPost(post.id)">
     <strong>{{ post.data.title}}</strong> (<a href="#" (click)="deletePost(post.id)">delete</a>)
     <br>
-    {{post.data.content}}
+    {{post.data.content}} Ref:{{post.data.ref}}
   </li>
 </ul>
 
@@ -20,10 +21,4 @@
 
 <h3>{{ (post | async)?.title }}</h3>
 <p>{{ (post | async)?.content }}</p>
-
-<h3>Notifications:</h3>
-<ul *ngFor='let message of messages | async'>
-  <li>
-      {{message.message}}
-  </li>
-</ul>
+<p> {{ (post | async)?.ref }} </p>
