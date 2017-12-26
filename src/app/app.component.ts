@@ -50,8 +50,8 @@ export class AppComponent implements OnInit {
   }
 
   addPost() {
-    // this.afs.collection('posts').add({'title': this.title, 'content': this.content});
-    this.afs.collection('posts').doc('my-custom-id').set({'title': this.title, 'content': this.content});
+    this.afs.collection('posts').add({'title': this.title, 'content': this.content});
+    // this.afs.collection('posts').doc('my-custom-id').set({'title': this.title, 'content': this.content});
     this.title = '';
     this.content = '';
     this.afs.collection('messages').add({'message': 'addition'});
