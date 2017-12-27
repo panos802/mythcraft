@@ -9,12 +9,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AppComponent } from './app.component';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCYOiZIBT2Q2xgwwZFT4grXPriyjJoVIhU',
-  authDomain: 'mythcraft-c42f0.firebaseapp.com',
-  databaseURL: 'https://mythcraft-c42f0.firebaseio.com',
-  projectId: 'mythcraft-c42f0',
-  storageBucket: 'mythcraft-c42f0.appspot.com',
-  messagingSenderId: '426547699034'
+  apiKey: 'AIzaSyCm9FPAW8euMzj1CEAlq3YyAyjOUFh5fYI',
+  authDomain: 'mythcraft-a1e50.firebaseapp.com',
+  databaseURL: 'https://mythcraft-a1e50.firebaseio.com',
+  projectId: 'mythcraft-a1e50',
+  storageBucket: 'mythcraft-a1e50.appspot.com',
+  messagingSenderId: '584785955918'
 };
 
 @NgModule({
