@@ -7,6 +7,12 @@ import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
+import { Routes, RouterModule } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCm9FPAW8euMzj1CEAlq3YyAyjOUFh5fYI',
@@ -17,18 +23,25 @@ const firebaseConfig = {
   messagingSenderId: '584785955918'
 };
 
+const routes: Routes = [
+  { path: '', redirectTo: '/start', pathMatch: 'full' },
+  { path: 'start', component: UserProfileComponent }
+];
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(routes, {useHash: true})
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
