@@ -30,12 +30,7 @@ export class AuthService {
           if (user) {
             this.userId = user.uid;
             // console.log( 'Got userId in constructor:' + this.userId);
-            const ret = this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-            ret.subscribe(val =>
-              // console.log(val)
-              document.body.style.backgroundImage = 'url(' + val.photoURL + ')'
-            );
-            return ret;
+            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
           } else {
             return Observable.of(null);
           }
@@ -64,9 +59,9 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL
+      email: user.email // ,
+      // displayName: user.displayName,
+      // photoURL: user.photoURL
     };
     return userRef.set(data);
   }
