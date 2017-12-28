@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
@@ -35,6 +36,8 @@ export class AuthService {
             return Observable.of(null);
           }
         });
+
+
   }
 
   googleLogin() {
@@ -81,4 +84,7 @@ export class AuthService {
     return userRef.update(data);
   }
 
+  get timestamp() {
+    return firebase.firestore.FieldValue.serverTimestamp();
+  }
 }
