@@ -11,12 +11,16 @@ interface User {
   email: string;
   photoURL?: string;
   displayName?: string;
-  favoriteColor?: string;
+  theme?: string;
+  status?: string;
 }
 
 @Injectable()
 export class AuthService {
+
   user: Observable<User>;
+  userId: string; // current user id
+
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
               private router: Router) {
@@ -24,7 +28,14 @@ export class AuthService {
       this.user = this.afAuth.authState
         .switchMap(user => {
           if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+            this.userId = user.uid;
+            // console.log( 'Got userId in constructor:' + this.userId);
+            const ret = this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+            ret.subscribe(val =>
+              // console.log(val)
+              document.body.style.backgroundImage = 'url(' + val.photoURL + ')'
+            );
+            return ret;
           } else {
             return Observable.of(null);
           }
@@ -36,10 +47,10 @@ export class AuthService {
     return this.oAuthLogin(provider);
   }
 
-  facebookLogin() {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    return this.oAuthLogin(provider);
-  }
+  // facebookLogin() {
+  //   const provider = new firebase.auth.FacebookAuthProvider();
+  //   return this.oAuthLogin(provider);
+  // }
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
@@ -65,4 +76,14 @@ export class AuthService {
         this.router.navigate(['/']);
     });
   }
+
+  setDataFromId (id: string, data: Object) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`testCol/${id}`);
+    return userRef.set(data);
+  }
+  updateDataFromId (doc: string, id: string, data: Object) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`${doc}/${id}`);
+    return userRef.update(data);
+  }
+
 }

@@ -10,19 +10,22 @@
   <i class="fa fa-google"></i> Connect Google
 </button>
 
-<button (click)="auth.facebookLogin()">
-  <i class="fa fa-google"></i> Connect Facebook
-</button>
-
 </ng-template>
 
 <!-- User logged in -->
 <ng-template #authenticated>
 <div *ngIf="auth.user | async as user">
-  <h3>Howdy, {{ user.displayName }}</h3>
-  <img  [src]="user.photoURL">
-  <p>UID: {{ user.uid }}</p>
-  <p>Favorite Color: {{ user?.favoriteColor }} </p>
-  <button (click)="auth.signOut()">Logout</button>
+  <div class="user_screen">
+      <h3>Hello mythwalker, {{ user.displayName }}</h3>
+      <!--<img  [src]="user.photoURL">-->
+      <p>UID: {{ user.uid }}</p>
+      <p>Favorite Color: {{ user?.favoriteColor }} </p>
+      <p>Image URL: {{user?.photoURL}}</p>
+      <button (click)="auth.signOut()">Logout</button>
+      <div>
+        <input type="text" [(ngModel)]='testData'>
+        <button (click)='updateData()'> Update ImageURL </button>
+      </div>
+  </div>
 </div>
 </ng-template>

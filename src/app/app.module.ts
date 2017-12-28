@@ -24,8 +24,8 @@ const firebaseConfig = {
 };
 
 const routes: Routes = [
-  { path: '', redirectTo: '/start', pathMatch: 'full' },
-  { path: 'start', component: UserProfileComponent }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: UserProfileComponent }
 ];
 
 @NgModule({
