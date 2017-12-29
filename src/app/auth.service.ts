@@ -36,13 +36,12 @@ export class AuthService {
             return Observable.of(null);
           }
         });
-        const ret = this.user;
-        // SOS
-        ret.subscribe(val =>
-          // console.log(val)
-          document.body.style.backgroundImage = 'url(' + val.photoURL + ')'
-        );
-
+        this.user.subscribe(val => {
+          // console.log(val);
+          if (val) {
+            document.body.style.backgroundImage = 'url(' + val.photoURL + ')';
+          }
+        });
   }
 
   googleLogin() {
