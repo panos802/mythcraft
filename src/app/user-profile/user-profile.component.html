@@ -1,21 +1,25 @@
 <div *ngIf="auth.user | async; then authenticated else guest">
   <!-- template will replace this div -->
 </div>
+
 <!-- User NOT logged in -->
 <ng-template #guest>
-<h3>Howdy, GUEST</h3>
-<p>Login to get started...</p>
-<input type="text" [(ngModel)]='email' placeholder="email...">
-<input type="password" [(ngModel)]='password' placeholder="password...">
-<div> <button (click)='this.auth.emailLogin(this.email, this.password)'>Login</button> </div>
-<div> <button (click)='this.auth.emailSignup(this.email, this.password)'>SignUp</button> </div>
-
-<div>  
-  <button (click)="auth.googleLogin()">
-    <i class="fa fa-google"></i> Connect Google
-  </button>
+<div class="login">
+  <div class="moogle"></div>
+  <div class="profileContent">
+    <h3>Howdy, GUEST</h3>
+    <p>Login to get started...</p>
+    <div> <input type="text" [(ngModel)]='email' placeholder="email..."> </div>
+    <div><input type="password" [(ngModel)]='password' placeholder="password..."> </div>
+    <button (click)='this.auth.emailLogin(this.email, this.password)'>Login</button> 
+    <button (click)='this.auth.emailSignup(this.email, this.password)'>SignUp</button> 
+    <div>  
+      <button (click)="auth.googleLogin()">
+        <i class="fa fa-google"></i> Connect Google
+      </button>
+    </div>
+  </div>
 </div>
-
 </ng-template>
 
 <!-- User logged in -->

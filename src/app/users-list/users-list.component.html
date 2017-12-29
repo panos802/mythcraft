@@ -1,3 +1,18 @@
-<p>
-  users-list works!
-</p>
+
+<div class="userListWrapper">
+  <ul *ngFor="let user of users | async">
+    <li>
+      <strong>Name: </strong> {{ user?.name }} <br>
+      <strong>uid:</strong> {{ user.uid }} <br>
+      <strong>email:</strong> {{ user.email }} <br>
+      {{ user?.photoURL }}
+    </li>
+  </ul>
+  <!-- <ul *ngFor="let post of testList">
+    <li>
+      <strong>uid:</strong> {{ post }} <br>
+      <strong>email:</strong> {{ post }} <br>
+      {{ post }}
+    </li>
+  </ul> -->
+</div>

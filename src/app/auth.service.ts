@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database-deprecated';
 
@@ -47,6 +47,7 @@ export class AuthService {
             document.body.style.backgroundImage = 'url(' + val.photoURL + ')';
           }
         });
+
   }
 
   emailSignup(email, password) {
@@ -61,19 +62,37 @@ export class AuthService {
   }
   emailLogin(email, password) {
     console.log('Trying to loggin with: ' + email);
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((credential) => {
-        console.log('Logging-In with email: ' + email);
-        console.log('Credential: ');
-        console.log(credential);
-        this.updateUserData(credential);
-      })
-      .catch(function(error) {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(a => {
+      // Existing and future Auth states are now persisted in the current
+      // session only. Closing the window would clear any existing state even
+      // if a user forgets to sign out.
+      // ...
+      // New sign-in will be persisted with session persistence.
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((credential) => {
+          console.log('Logging-In with email: ' + email);
+          // console.log('Credential: ');
+          // console.log(credential);
+          this.updateUserData(credential);
+        })
+        .catch(function(error) {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+        console.log('Error during email login:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
+      });
+    })
+    .catch(function(error) {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      // ...
-      console.log('Error during email login:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
+      console.log('Error from Persistance:');
+      console.log('Error code:');
+      console.log(errorCode);
+      console.log('Error message:');
+      console.log(errorMessage);
     });
   }
 
@@ -110,8 +129,6 @@ export class AuthService {
   }
 
 
-
-
   // CUSTOM methods
   setDataFromId (id: string, data: Object) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`testCol/${id}`);
@@ -131,5 +148,9 @@ export class AuthService {
   deleteData(col: string, doc: string) {
     const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
     return ref.delete();
+  }
+
+  getUsers() {
+    return this.afs.collection('users').valueChanges();
   }
 }

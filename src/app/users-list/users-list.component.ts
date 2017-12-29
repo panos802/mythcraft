@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { NgClass } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-users-list',
@@ -6,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
+  testList = ['a', 'b', 'c'];
 
-  constructor() { }
+  users: any;
+
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
+    this.users = this.auth.getUsers();
   }
 
 }
