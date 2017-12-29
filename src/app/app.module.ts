@@ -13,6 +13,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
+import { UsersListComponent } from './users-list/users-list.component';
 
 
 const firebaseConfig = {
@@ -32,7 +33,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,
