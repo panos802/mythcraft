@@ -11,6 +11,9 @@ import { Observable } from 'rxjs/Observable';
 
 export class UserProfileComponent {
   testData: string;
+
+  email: string = 'test@gmail.com';
+  password: string = 'panasonic802';
   // userData: Observable<any>;
 
   constructor(public auth: AuthService) {}
@@ -32,11 +35,16 @@ export class UserProfileComponent {
     };
     this.auth.updateDataFromId('users', id, data);
   }
-
   dataTest() {
     const col = 'test';
     const doc = 'simple-test';
-    const data = {'a': {'b': {'c': 10, 'd': 11, 'e': 10}}};
+    const time = this.auth.timestamp();
+    const data = { 'b': {'c': 2, 'time': time}};
     this.auth.setMergeData(col, doc, data);
+  }
+  deleteTest() {
+    const col = 'test';
+    const doc = 'simple-test';
+    this.auth.deleteData(col, doc);
   }
 }

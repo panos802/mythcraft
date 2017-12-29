@@ -5,10 +5,16 @@
 <ng-template #guest>
 <h3>Howdy, GUEST</h3>
 <p>Login to get started...</p>
+<input type="text" [(ngModel)]='email' placeholder="email...">
+<input type="password" [(ngModel)]='password' placeholder="password...">
+<div> <button (click)='this.auth.emailLogin(this.email, this.password)'>Login</button> </div>
+<div> <button (click)='this.auth.emailSignup(this.email, this.password)'>SignUp</button> </div>
 
-<button (click)="auth.googleLogin()">
-  <i class="fa fa-google"></i> Connect Google
-</button>
+<div>  
+  <button (click)="auth.googleLogin()">
+    <i class="fa fa-google"></i> Connect Google
+  </button>
+</div>
 
 </ng-template>
 
@@ -27,9 +33,8 @@
         <button (click)='updateData()'> Update ImageURL </button>
       </div>
       
-      <div>
-        <button (click)='dataTest()'>Test Data</button>
-      </div>
+      <div> <button (click)='dataTest()'>Add test Data</button> </div>
+      <div> <button (click)='deleteTest()'>Delete test Data</button> </div>
   </div>
 </div>
 </ng-template>

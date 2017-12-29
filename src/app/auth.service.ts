@@ -44,18 +44,42 @@ export class AuthService {
         });
   }
 
+  emailSignup(email, password) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
+      console.log('Error during email signup:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
+    });
+  }
+  emailLogin(email, password) {
+    console.log('Trying to loggin with: ' + email);
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((credential) => {
+        console.log('Loggin with email: ' + email);
+        console.log('Credential: ');
+        console.log(credential);
+      })
+      .catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
+      console.log('Error during email login:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
+    });
+  }
+
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
-
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
         this.updateUserData(credential.user);
       });
   }
-
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
@@ -67,14 +91,20 @@ export class AuthService {
     };
     return userRef.set(data, {merge: true});
   }
-
   signOut() {
     this.afAuth.auth.signOut().then(() => {
-        this.router.navigate(['/']);
+      document.body.style.backgroundImage = '';
+      this.router.navigate(['/']);
+    }).catch(function(error) {
+      // An error happened.
+      console.log('Error during signout');
     });
-
   }
 
+
+
+
+  // CUSTOM methods
   setDataFromId (id: string, data: Object) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`testCol/${id}`);
     return userRef.set(data);
@@ -83,13 +113,15 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${id}`);
     return userRef.update(data);
   }
-
-  get timestamp() {
+  timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
   }
-
   setMergeData(col: string, doc: string, data) {
     const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
     return ref.set(data, {merge: true});
+  }
+  deleteData(col: string, doc: string) {
+    const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
+    return ref.delete();
   }
 }
