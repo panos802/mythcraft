@@ -79,12 +79,17 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`testCol/${id}`);
     return userRef.set(data);
   }
-  updateDataFromId (doc: string, id: string, data: Object) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`${doc}/${id}`);
+  updateDataFromId (col: string, id: string, data: Object) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${id}`);
     return userRef.update(data);
   }
 
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
+  }
+
+  setMergeData(col: string, doc: string, data) {
+    const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
+    return ref.set(data, {merge: true});
   }
 }

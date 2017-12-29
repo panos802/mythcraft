@@ -31,6 +31,12 @@ export class UserProfileComponent {
       'photoURL': this.testData
     };
     this.auth.updateDataFromId('users', id, data);
-    // document.body.style.backgroundImage = 'url(' + this.testData + ')';
+  }
+
+  dataTest() {
+    const col = 'test';
+    const doc = 'simple-test';
+    const data = {'a': {'b': {'c': 10, 'd': 11, 'e': 10}}};
+    this.auth.setMergeData(col, doc, data);
   }
 }
