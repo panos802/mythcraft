@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 
 import { AppComponent } from './app.component';
 import { AuthService } from './auth.service';
@@ -39,9 +38,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    AngularFireDatabaseModule,
     FormsModule,
     RouterModule.forRoot(routes, {useHash: true})
   ],

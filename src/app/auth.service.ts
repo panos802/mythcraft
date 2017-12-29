@@ -4,9 +4,6 @@ import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 
-import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database-deprecated';
-
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
@@ -27,7 +24,6 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
-              private db: AngularFireDatabase,
               private router: Router) {
       //// Get auth data, then get firestore user document || null
       this.user = this.afAuth.authState
