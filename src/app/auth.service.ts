@@ -36,7 +36,12 @@ export class AuthService {
             return Observable.of(null);
           }
         });
-
+        const ret = this.user;
+        // SOS
+        ret.subscribe(val =>
+          // console.log(val)
+          document.body.style.backgroundImage = 'url(' + val.photoURL + ')'
+        );
 
   }
 
@@ -44,11 +49,6 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
-
-  // facebookLogin() {
-  //   const provider = new firebase.auth.FacebookAuthProvider();
-  //   return this.oAuthLogin(provider);
-  // }
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
@@ -66,13 +66,14 @@ export class AuthService {
       // displayName: user.displayName,
       // photoURL: user.photoURL
     };
-    return userRef.set(data);
+    return userRef.set(data, {merge: true});
   }
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
         this.router.navigate(['/']);
     });
+
   }
 
   setDataFromId (id: string, data: Object) {
