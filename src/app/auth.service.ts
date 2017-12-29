@@ -31,7 +31,7 @@ export class AuthService {
           if (user) {
             this.userId = user.uid;
             // console.log( 'Got userId in constructor:' + this.userId);
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+            return this.afs.doc(`users/${user.uid}`).valueChanges();
           } else {
             return Observable.of(null);
           }
@@ -43,7 +43,6 @@ export class AuthService {
             document.body.style.backgroundImage = 'url(' + val.photoURL + ')';
           }
         });
-
   }
 
   emailSignup(email, password) {
@@ -106,17 +105,24 @@ export class AuthService {
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
     const data: User = {
       uid: user.uid,
       email: user.email ,
+      status: 'online',
       // displayName: user.displayName,
       // photoURL: user.photoURL
     };
+    userRef.set({lastLogIn: timestamp}, {merge: true});
     return userRef.set(data, {merge: true});
   }
   signOut() {
+    document.body.style.backgroundImage = '';
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.userId}`);
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    userRef.set({status: 'offline'}, {merge: true});
+    userRef.set({lastLogOut: timestamp}, {merge: true});
     this.afAuth.auth.signOut().then(() => {
-      document.body.style.backgroundImage = '';
       this.router.navigate(['/']);
     }).catch(function(error) {
       // An error happened.
