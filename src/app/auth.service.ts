@@ -4,6 +4,9 @@ import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
+import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database-deprecated';
+
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
@@ -24,6 +27,7 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
+              private db: AngularFireDatabase,
               private router: Router) {
       //// Get auth data, then get firestore user document || null
       this.user = this.afAuth.authState
@@ -36,6 +40,7 @@ export class AuthService {
             return Observable.of(null);
           }
         });
+        // custom code
         this.user.subscribe(val => {
           // console.log(val);
           if (val) {
@@ -45,21 +50,23 @@ export class AuthService {
   }
 
   emailSignup(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ...
-      console.log('Error during email signup:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .catch(function(error) {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+        console.log('Error during email signup:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
     });
   }
   emailLogin(email, password) {
     console.log('Trying to loggin with: ' + email);
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((credential) => {
-        console.log('Loggin with email: ' + email);
+        console.log('Logging-In with email: ' + email);
         console.log('Credential: ');
         console.log(credential);
+        this.updateUserData(credential);
       })
       .catch(function(error) {
       // Handle Errors here.
@@ -80,12 +87,13 @@ export class AuthService {
         this.updateUserData(credential.user);
       });
   }
+
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
-      email: user.email // ,
+      email: user.email ,
       // displayName: user.displayName,
       // photoURL: user.photoURL
     };
