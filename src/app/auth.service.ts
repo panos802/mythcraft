@@ -19,7 +19,7 @@ interface User {
 @Injectable()
 export class AuthService {
 
-  user: Observable<User>;
+  user: Observable<any>;
   userId: string; // current user id
 
   constructor(private afAuth: AngularFireAuth,
@@ -77,14 +77,14 @@ export class AuthService {
           // }
           this.updateUserData(credential);
         })
-        .catch(function(error) {
+        .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log('Error during email login:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
       });
     })
-    .catch(function(error) {
+    .catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -125,13 +125,24 @@ export class AuthService {
     document.body.style.backgroundImage = '';
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.userId}`);
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-    userRef.set({status: 'offline'}, {merge: true});
-    userRef.set({lastLogOut: timestamp}, {merge: true});
-    this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/']);
-    }).catch(function(error) {
+    userRef.set({status: 'offline'}, {merge: true})
+    .then( () => {
+      userRef.set({lastLogOut: timestamp}, {merge: true})
+      .then( () => {
+        this.afAuth.auth.signOut()
+        .then(() => {
+          this.router.navigate(['/']);
+        }).catch((error) => {
+          // An error happened.
+          console.log('Error during signout proccess');
+        });
+      }).catch((error) => {
+        // An error happened.
+        console.log('Error during signout proccess');
+      });
+    }).catch((error) => {
       // An error happened.
-      console.log('Error during signout');
+      console.log('Error during signout proccess');
     });
   }
 
@@ -144,9 +155,6 @@ export class AuthService {
   updateDataFromId (col: string, id: string, data: Object) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${id}`);
     return userRef.update(data);
-  }
-  timestamp() {
-    return firebase.firestore.FieldValue.serverTimestamp();
   }
   setMergeData(col: string, doc: string, data) {
     const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
