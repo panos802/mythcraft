@@ -148,10 +148,6 @@ export class AuthService {
 
 
   // CUSTOM methods
-  setDataFromId (id: string, data: Object) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`testCol/${id}`);
-    return userRef.set(data);
-  }
   updateDataFromId (col: string, id: string, data: Object) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${id}`);
     return userRef.update(data);
@@ -159,10 +155,6 @@ export class AuthService {
   setMergeData(col: string, doc: string, data) {
     const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
     return ref.set(data, {merge: true});
-  }
-  deleteData(col: string, doc: string) {
-    const ref: AngularFirestoreDocument<any> = this.afs.doc(`${col}/${doc}`);
-    return ref.delete();
   }
 
   getUsers() {

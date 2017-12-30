@@ -2,8 +2,8 @@
 <div class="userListWrapper">
   <ul *ngFor="let user of users | async">
     <li>
-      <strong>Name: </strong> {{ user?.name }} <br>
-      <strong>uid:</strong> {{ user.uid }} <br>
+      <strong>Name: </strong> {{ user?.displayName }} <br>
+      <!-- <strong>uid:</strong> {{ user.uid }} <br> -->
       <strong>email:</strong> {{ user.email }} <br>
       <strong>status:</strong> {{ user?.status }} <br>
     </li>

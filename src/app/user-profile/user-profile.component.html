@@ -23,22 +23,28 @@
 <ng-template #authenticated>
 <div *ngIf="auth.user | async as user">
   <div class="user-profile-wrapper">
-
-  </div>
-  <div class="user-screen">
+    <div class="user-screen">
       <h3>Hello mythwalker, {{ user.displayName }}</h3>
-      <!--<img  [src]="user.photoURL">-->
-      <p>UID: {{ user.uid }}</p>
+      <!-- <p>UID: {{ user.uid }}</p>
       <p>Favorite Color: {{ user?.favoriteColor }} </p>
-      <p>Image URL: {{user?.photoURL}}</p>
+      <p>Image URL: {{user?.photoURL}}</p> -->
       <button (click)="auth.signOut()">Logout</button>
       <div>
-        <input type="text" [(ngModel)]='testData'>
-        <button (click)='updateData()'> Update ImageURL </button>
+        <input type="text" [(ngModel)]='displayName'>
+        <button (click)='this.auth.setMergeData("users", this.auth.userId, {"displayName": this.displayName})'>
+           Update Display Name
+        </button>
       </div>
-  </div>
-  <div class="users-list-wrapper">
-    <app-users-list></app-users-list>
+      <div>
+        <input type="text" [(ngModel)]='imageURL'>
+        <button (click)='this.auth.setMergeData("users", this.auth.userId, {"photoURL": this.imageURL})'>
+           Update ImageURL
+        </button>
+      </div>
+    </div>
+    <div class="users-list">
+      <app-users-list></app-users-list>
+    </div>
   </div>
 </div>
 </ng-template>

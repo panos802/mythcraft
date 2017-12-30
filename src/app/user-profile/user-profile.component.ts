@@ -10,29 +10,20 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class UserProfileComponent {
-  testData: string;
 
+  imageURL: string;
+  displayName: string;
   email: string = 'test@gmail.com';
   password: string = 'panasonic802';
   // userData: Observable<any>;
 
   constructor(public auth: AuthService) {}
 
-  // currently not used
-  setData() {
-    const id = this.auth.userId;
-    const data = {
-      'uid': id,
-      'testData': this.testData
-    };
-    this.auth.setDataFromId(id, data);
-  }
-
-  updateData() {
-    const id = this.auth.userId;
-    const data = {
-      'photoURL': this.testData
-    };
-    this.auth.updateDataFromId('users', id, data);
-  }
+  // updateData() {
+  //   const id = this.auth.userId;
+  //   const data = {
+  //     'photoURL': this.testData
+  //   };
+  //   this.auth.updateDataFromId('users', id, data);
+  // }
 }
