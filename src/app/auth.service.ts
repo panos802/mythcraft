@@ -62,20 +62,25 @@ export class AuthService {
       // Existing and future Auth states are now persisted in the current
       // session only. Closing the window would clear any existing state even
       // if a user forgets to sign out.
-      // ...
       // New sign-in will be persisted with session persistence.
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((credential) => {
           console.log('Logging-In with email: ' + email);
           // console.log('Credential: ');
           // console.log(credential);
+          // --------VALIDATE EMAIL
+          // if (!credential.emailVerified) {
+          //   // alert('Email not verified');
+          //   // this.signOut();
+          // } else {
+          //   this.updateUserData(credential);
+          // }
           this.updateUserData(credential);
         })
         .catch(function(error) {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ...
         console.log('Error during email login:\n' + 'Error Code: ' + errorCode + '\nError Message: ' + errorMessage);
       });
     })
@@ -91,16 +96,16 @@ export class AuthService {
     });
   }
 
-  googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
-  }
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.updateUserData(credential.user);
-      });
-  }
+  // googleLogin() {
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   return this.oAuthLogin(provider);
+  // }
+  // private oAuthLogin(provider) {
+  //   return this.afAuth.auth.signInWithPopup(provider)
+  //     .then((credential) => {
+  //       this.updateUserData(credential.user);
+  //     });
+  // }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
@@ -153,6 +158,8 @@ export class AuthService {
   }
 
   getUsers() {
-    return this.afs.collection('users').valueChanges();
+    return this.afs.collection('users', ref => {
+      return ref.orderBy('lastLogIn');
+    }).valueChanges();
   }
 }

@@ -5,27 +5,27 @@
 <!-- User NOT logged in -->
 <ng-template #guest>
 <div class="login">
-  <div class="moogle"></div>
-  <div class="profileContent">
-    <h3>Howdy, GUEST</h3>
-    <p>Login to get started...</p>
+  <div class="moogle filler"></div>
+  <div class="login-content">
+    <strong>Hello, Kuppo.</strong><span> Login to get started...</span>
     <div> <input type="text" [(ngModel)]='email' placeholder="email..."> </div>
     <div><input type="password" [(ngModel)]='password' placeholder="password..."> </div>
-    <button (click)='this.auth.emailLogin(this.email, this.password)'>Login</button> 
+    <button (click)='this.auth.emailLogin(this.email, this.password)'>Login</button>
+    <!-- SOS deactivate -->
     <button (click)='this.auth.emailSignup(this.email, this.password)'>SignUp</button> 
-    <div>  
-      <button (click)="auth.googleLogin()">
-        <i class="fa fa-google"></i> Connect Google
-      </button>
-    </div>
+    <!-- <div><button (click)="auth.googleLogin()"><i class="fa fa-google"></i>Connect Google</button></div> -->
   </div>
+  <div class="filler"></div>
 </div>
 </ng-template>
 
 <!-- User logged in -->
 <ng-template #authenticated>
 <div *ngIf="auth.user | async as user">
-  <div class="user_screen">
+  <div class="user-profile-wrapper">
+
+  </div>
+  <div class="user-screen">
       <h3>Hello mythwalker, {{ user.displayName }}</h3>
       <!--<img  [src]="user.photoURL">-->
       <p>UID: {{ user.uid }}</p>
@@ -36,9 +36,9 @@
         <input type="text" [(ngModel)]='testData'>
         <button (click)='updateData()'> Update ImageURL </button>
       </div>
-      
-      <div> <button (click)='dataTest()'>Add test Data</button> </div>
-      <div> <button (click)='deleteTest()'>Delete test Data</button> </div>
+  </div>
+  <div class="users-list-wrapper">
+    <app-users-list></app-users-list>
   </div>
 </div>
 </ng-template>

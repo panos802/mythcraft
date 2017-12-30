@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-  testList = ['a', 'b', 'c'];
 
   users: any;
 

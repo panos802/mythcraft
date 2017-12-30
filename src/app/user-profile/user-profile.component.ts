@@ -19,7 +19,7 @@ export class UserProfileComponent {
   constructor(public auth: AuthService) {}
 
   // currently not used
-  setTestData() {
+  setData() {
     const id = this.auth.userId;
     const data = {
       'uid': id,
@@ -34,17 +34,5 @@ export class UserProfileComponent {
       'photoURL': this.testData
     };
     this.auth.updateDataFromId('users', id, data);
-  }
-  dataTest() {
-    const col = 'test';
-    const doc = 'simple-test';
-    const time = this.auth.timestamp();
-    const data = { 'b': {'c': 2, 'time': time}};
-    this.auth.setMergeData(col, doc, data);
-  }
-  deleteTest() {
-    const col = 'test';
-    const doc = 'simple-test';
-    this.auth.deleteData(col, doc);
   }
 }
