@@ -41,7 +41,7 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireAuthModule,
     FormsModule,
-    RouterModule.forRoot(routes, {useHash: true})
+    RouterModule.forRoot(routes, {useHash: false})
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
