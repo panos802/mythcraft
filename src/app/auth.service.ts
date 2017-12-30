@@ -7,14 +7,14 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
-interface User {
-  uid: string;
-  email: string;
-  photoURL?: string;
-  displayName?: string;
-  theme?: string;
-  status?: string;
-}
+// interface User {
+//   uid: string;
+//   email: string;
+//   photoURL?: string;
+//   displayName?: string;
+//   theme?: string;
+//   status?: string;
+// }
 
 @Injectable()
 export class AuthService {
@@ -111,7 +111,7 @@ export class AuthService {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-    const data: User = {
+    const data /*: User*/ = {
       uid: user.uid,
       email: user.email ,
       status: 'online',
@@ -160,6 +160,11 @@ export class AuthService {
   getUsers() {
     return this.afs.collection('users', ref => {
       return ref.orderBy('lastLogIn');
+    }).valueChanges();
+  }
+  getMoves() {
+    this.afs.collection('moves', ref => {
+      return ref.orderBy('name');
     }).valueChanges();
   }
 }
