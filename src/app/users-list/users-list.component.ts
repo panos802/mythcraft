@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class UsersListComponent implements OnInit {
 
+
   users: any;
 
   constructor(public auth: AuthService) { }

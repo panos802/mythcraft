@@ -1,11 +1,19 @@
 
-<div class="userListWrapper">
-  <ul *ngFor="let user of users | async">
-    <li>
+<div class="users-list-wrapper">
+  <ul class="users-list" *ngFor="let user of users | async">
+    <li *ngIf='user.status==="online"' class="users-list-item">
       <strong>Name: </strong> {{ user?.displayName }} <br>
       <!-- <strong>uid:</strong> {{ user.uid }} <br> -->
       <strong>email:</strong> {{ user.email }} <br>
-      <strong>status:</strong> {{ user?.status }} <br>
+      <span [ngClass]='{"green": user.status==="online", "red": user.status==="offline"}'> {{ user?.status }} </span>
     </li>
   </ul>
+  <ul class="users-list" *ngFor="let user of users | async">
+      <li *ngIf='user.status==="offline"' class="users-list-item">
+        <strong>Name: </strong> {{ user?.displayName }} <br>
+        <!-- <strong>uid:</strong> {{ user.uid }} <br> -->
+        <strong>email:</strong> {{ user.email }} <br>
+        <span [ngClass]='{"green": user.status==="online", "red": user.status==="offline"}'> {{ user?.status }} </span>
+      </li>
+    </ul>
 </div>

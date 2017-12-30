@@ -11,6 +11,25 @@ body {
     -webkit-box-sizing: border-box;
 }
 
+/* SCROLLBAR STYLE */
+::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: rgb(200, 200, 200);
+}
+
+::-webkit-scrollbar{
+	width: 10px;
+	background-color: rgb(200, 200, 200);
+}
+
+::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: rgb(46, 46, 46);
+}
+
+
 /*
 body {
     background: #222427;
