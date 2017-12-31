@@ -35,6 +35,17 @@ interface ConEff {
   styleUrls: ['./moves.component.css']
 })
 export class MovesComponent implements OnInit {
+  categories = ['Class move', 'Boss move', 'Special move'];
+  types = [
+    'Command',
+    'Attack',
+    'Skill',
+    'Spell',
+    'Call',
+    'Call (Summon)',
+    'Ability',
+    'Trait'
+  ];
 
   classes: any;
   movesCol: any;
@@ -43,7 +54,7 @@ export class MovesComponent implements OnInit {
   selectedMove: any;
   load: boolean = false;
 
-  move: Move = {
+  currentMove: Move = {
     name: '',
     cost: '',
     type: '',

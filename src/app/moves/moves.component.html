@@ -1,10 +1,12 @@
 <div *ngIf='load; then loaded else loadButton'>
 </div>
 
+<!-- Loaded -->
 <ng-template #loaded>
-<div>
+ <div>
   <button (click)='fillList()'>Fill List</button>
 </div>
+
 <div class="moves-wrapper">
   <div>
     <strong>Selected Move: </strong> {{ selectedMove }}
@@ -16,13 +18,18 @@
       </li>
     </ul>
   </div>
-
+<!-- CREATE MOVE -->
   <div>
-    
+    <!-- <form (ngSubmit)="onSubmit()" #testForm="ngForm" ngNativeValidate>
+      <input type="text" id="test1" name="test1" [(ngModel)]="name" placeholder="name" required>
+      <button type="submit">submit</button>
+    </form> -->
   </div>
+<!-- create move END -->
 </div>
 </ng-template>
 
+<!-- Button to load -->
 <ng-template #loadButton>
   <button (click)='loadList()'>Load Moves</button>
 </ng-template>
