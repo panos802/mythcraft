@@ -43,17 +43,28 @@ export class MovesComponent implements OnInit {
   selectedMove: any;
   load: boolean = false;
 
+  move: Move = {
+    name: '',
+    cost: '',
+    type: '',
+    effect: '',
+    classes: '',
+    category: '',
+    extras: [],
+    extras_max_index: 0
+  };
+
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
   }
 
   fillList() {
-    this.movesCol.doc('Haste').set({name: 'Haste', cost: '.12 MP'});
-    this.movesCol.doc('Regen').set({name: 'Regen', cost: '.8 MP'});
-    this.movesCol.doc('Float').set({name: 'Float', cost: '.10 MP'});
-    this.movesCol.doc('Kalankas').set({name: 'Kalankas', cost: '.40 MP'});
-    this.movesCol.doc('Meteo').set({name: 'Meteo', cost: '.200 MP'});
+    this.movesCol.doc('Haste').set({name: 'Haste'});
+    this.movesCol.doc('Regen').set({name: 'Regen'});
+    this.movesCol.doc('Float').set({name: 'Float'});
+    this.movesCol.doc('Kalankas').set({name: 'Kalankas'});
+    this.movesCol.doc('Meteo').set({name: 'Meteo'});
   }
 
   setSelection( moveName ) {
@@ -65,5 +76,7 @@ export class MovesComponent implements OnInit {
     this.moves = this.movesCol.valueChanges();
     this.load = true;
   }
+
+
 
 }

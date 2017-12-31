@@ -167,4 +167,9 @@ export class AuthService {
       return ref.orderBy('name');
     });
   }
+  getCollectionRefOrderedBy (col: string, orderBy: string) {
+    return this.afs.collection( col , ref => {
+      return ref.orderBy( orderBy );
+    });
+  }
 }
