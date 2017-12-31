@@ -19,11 +19,19 @@ export class UserProfileComponent {
 
   constructor(public auth: AuthService) {}
 
-  // updateData() {
-  //   const id = this.auth.userId;
-  //   const data = {
-  //     'photoURL': this.testData
-  //   };
-  //   this.auth.updateDataFromId('users', id, data);
-  // }
+  updateUserData (field: string, value) {
+    const key = field;
+    const data = {};
+    data[key] = value;
+    this.auth.setMergeData('users', this.auth.userId, data);
+  }
+
+  setBackground(imageURL) {
+    document.body.style.backgroundImage = 'url(' + imageURL + ')';
+  }
+
+  updateBackground (imageURL) {
+    this.updateUserData('photoURL', imageURL);
+    this.setBackground(imageURL);
+  }
 }

@@ -13,10 +13,15 @@ export class UsersListComponent implements OnInit {
 
   users: any;
 
+  load: boolean = false;
+
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
-    this.users = this.auth.getUsers();
   }
 
+  loadList() {
+    this.users = this.auth.getUsers();
+    this.load = true;
+  }
 }

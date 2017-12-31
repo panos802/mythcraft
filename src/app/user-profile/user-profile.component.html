@@ -4,10 +4,13 @@
 
 <!-- User NOT logged in -->
 <ng-template #guest>
-<div class="login">
+<div class="login-wrapper">
   <div class="moogle filler"></div>
   <div class="login-content">
-    <strong>Hello, Kuppo.</strong><span> Login to get started...</span>
+    <div class="hello-Kuppo">
+      <h1>Hello, Kuppo.</h1>
+      <h2>Login to get started.</h2>
+    </div>
     <div> <input type="text" [(ngModel)]='email' placeholder="email..."> </div>
     <div><input type="password" [(ngModel)]='password' placeholder="password..."> </div>
     <button (click)='this.auth.emailLogin(this.email, this.password)'>Login</button>
@@ -30,16 +33,17 @@
       <p>Image URL: {{user?.photoURL}}</p> -->
       <button (click)="auth.signOut()">Logout</button>
       <div>
-        <input type="text" [(ngModel)]='displayName'>
-        <button (click)='this.auth.setMergeData("users", this.auth.userId, {"displayName": this.displayName})'>
-           Update Display Name
-        </button>
+        <input type="text"  [value]='user.displayName' #displayName>
+        <button type="submit" (click)='updateUserData("displayName",displayName.value)'>Update Display Name</button>  
       </div>
       <div>
-        <input type="text" [(ngModel)]='imageURL'>
-        <button (click)='this.auth.setMergeData("users", this.auth.userId, {"photoURL": this.imageURL})'>
-           Update ImageURL
-        </button>
+        <input type="text"  [value]='user.photoURL' #photoURL>
+        <button type="submit" (click)='updateBackground(photoURL.value)'>Update Background</button>
+        <button (click)='setBackground(photoURL.value)'> Activate Background </button>          
+      </div>
+
+      <div>
+        <app-moves></app-moves>
       </div>
     </div>
     <div class="profile-users-list">

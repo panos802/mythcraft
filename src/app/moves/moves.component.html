@@ -1,7 +1,24 @@
-<div>
-  <ul class="moves-list" *ngFor="let move of moves | async">
-    <li class="moves-list-item">
-      <strong> {{ move.name }} </strong>
-    </li>
-  </ul>
+<div *ngIf='load; then loaded else loadButton'>
 </div>
+
+<ng-template #loaded>
+<div>
+  <button (click)='fillList()'>Fill List</button>
+</div>
+<div class="moves-wrapper">
+  <div>
+    <strong>Selected Move: </strong> {{ selectedMove }}
+  </div>
+  <div>
+    <ul class="moves-list" *ngFor="let move of moves | async">
+      <li (click)='setSelection( move.name )' class="moves-list-item">
+        {{ move.name }} <strong>{{move.cost}}</strong>
+      </li>
+    </ul>
+  </div>
+</div>
+</ng-template>
+
+<ng-template #loadButton>
+  <button (click)='loadList()'>Load Moves</button>
+</ng-template>

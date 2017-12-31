@@ -36,13 +36,13 @@ export class AuthService {
             return Observable.of(null);
           }
         });
-        // custom code
-        this.user.subscribe(val => {
-          // console.log(val);
-          if (val) {
-            document.body.style.backgroundImage = 'url(' + val.photoURL + ')';
-          }
-        });
+      // Very bad code, do not subscribe in constructor
+      // this.user.subscribe(val => {
+      //   // console.log(val);
+      //   if (val) {
+      //     return document.body.style.backgroundImage = 'url(' + val.photoURL + ')';
+      //   }
+      // });
   }
 
   emailSignup(email, password) {
@@ -88,8 +88,7 @@ export class AuthService {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log('Error from Persistance:');
-      console.log('Error code:');
+      console.log('Error from Persistance. Error code:');
       console.log(errorCode);
       console.log('Error message:');
       console.log(errorMessage);
@@ -110,6 +109,7 @@ export class AuthService {
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    // The rest
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
     const data /*: User*/ = {
       uid: user.uid,
@@ -122,7 +122,7 @@ export class AuthService {
     return userRef.set(data, {merge: true});
   }
   signOut() {
-    document.body.style.backgroundImage = '';
+    document.body.style.backgroundImage = 'url(https://images2.alphacoders.com/759/thumb-1920-759668.jpg)';
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.userId}`);
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
     userRef.set({status: 'offline'}, {merge: true})
@@ -162,9 +162,9 @@ export class AuthService {
       return ref.orderBy('lastLogIn');
     }).valueChanges();
   }
-  getMoves() {
-    this.afs.collection('moves', ref => {
+  getMovesRef() {
+    return this.afs.collection('moves', ref => {
       return ref.orderBy('name');
-    }).valueChanges();
+    });
   }
 }

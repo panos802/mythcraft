@@ -1,4 +1,7 @@
+<div *ngIf='load; then loaded else loadButton'>
+</div>
 
+<ng-template #loaded>
 <div class="users-list-wrapper">
   <ul class="users-list" *ngFor="let user of users | async">
     <li *ngIf='user.status==="online"' class="users-list-item">
@@ -17,3 +20,8 @@
       </li>
     </ul>
 </div>
+</ng-template>
+
+<ng-template #loadButton>
+  <button (click)='loadList()'>Load Users</button>
+</ng-template>

@@ -37,12 +37,33 @@ interface ConEff {
 export class MovesComponent implements OnInit {
 
   classes: any;
+  movesCol: any;
   moves: any;
+
+  selectedMove: any;
+  load: boolean = false;
 
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
-    this.moves = this.auth.getMoves();
+  }
+
+  fillList() {
+    this.movesCol.doc('Haste').set({name: 'Haste', cost: '.12 MP'});
+    this.movesCol.doc('Regen').set({name: 'Regen', cost: '.8 MP'});
+    this.movesCol.doc('Float').set({name: 'Float', cost: '.10 MP'});
+    this.movesCol.doc('Kalankas').set({name: 'Kalankas', cost: '.40 MP'});
+    this.movesCol.doc('Meteo').set({name: 'Meteo', cost: '.200 MP'});
+  }
+
+  setSelection( moveName ) {
+    this.selectedMove = moveName;
+  }
+
+  loadList() {
+    this.movesCol = this.auth.getMovesRef();
+    this.moves = this.movesCol.valueChanges();
+    this.load = true;
   }
 
 }
