@@ -3,7 +3,6 @@ import { AuthService } from '../auth.service';
 import { NgClass } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
-
 interface Class {
   name: string;
   description: string;
@@ -11,7 +10,6 @@ interface Class {
   archtype?: string;
   moves: string[];
 }
-
 interface Move {
   name: string;
   cost?: string;
@@ -19,14 +17,11 @@ interface Move {
   effect: string;
   classes?: string;
   category?: string;
-  extras: ConEff[];
+  extras?: ConEff[];
   extras_max_index: number;
 }
-
 interface ConEff {
-  index: number;
-  condition: string;
-  effect: string;
+  index: number; condition: string; effect: string;
 }
 
 @Component({
@@ -88,6 +83,9 @@ export class MovesComponent implements OnInit {
     this.load = true;
   }
 
+  onSubmit( userForm ) {
+    console.log(userForm);
+  }
 
 
 }

@@ -20,10 +20,22 @@
   </div>
 <!-- CREATE MOVE -->
   <div>
-    <!-- <form (ngSubmit)="onSubmit()" #testForm="ngForm" ngNativeValidate>
-      <input type="text" id="test1" name="test1" [(ngModel)]="name" placeholder="name" required>
-      <button type="submit">submit</button>
-    </form> -->
+    <form class="move-form"
+      #userForm="ngForm"
+      (ngSubmit)='onSubmit(userForm.value)'>
+      <input (keydown.enter)='$event.preventDefault()' type="text" name="name" placeholder="name" ngModel required><br>
+      <input (keydown.enter)='$event.preventDefault()' type="text" name="cost" placeholder="ex...12 mp" ngModel><br>
+      <input (keydown.enter)='$event.preventDefault()' type="text" name="class/race" placeholder="class or race..." ngModel> <br>
+      <select name="type" ngModel>
+        <option *ngFor='let type of types' [ngValue]='type'> {{type}} </option>
+      </select> <br>
+      <select name="category" ngModel>
+        <option *ngFor='let category of categories' [ngValue]='category'> {{category}} </option>
+      </select> <br>
+      <textarea name="effect" placeholder="effect..." ngModel></textarea> 
+      <br> <br>
+      <input type="submit" value="submit">
+    </form>
   </div>
 <!-- create move END -->
 </div>
