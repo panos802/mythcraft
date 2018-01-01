@@ -22,7 +22,7 @@
   <div>
     <input type="text" name="name" placeholder="name" [(ngModel)]='currentMove.name'><br>
     <input type="text" name="cost" placeholder="ex...12 mp" [(ngModel)]='currentMove.cost'><br>
-    <input type="text" name="class/race" placeholder="class or race..." [(ngModel)]='currentMove.classRace'> <br>
+    <input type="text" name="class/race" placeholder="classes and/or races..." [(ngModel)]='currentMove.classRace'> <br>
     <select name="type" [(ngModel)]='currentMove.type'>
       <option *ngFor='let type of types' [ngValue]='type'> {{type}} </option>
     </select> <br>

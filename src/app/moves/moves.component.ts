@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { NgClass } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { forEach } from '@angular/router/src/utils/collection';
+import { error } from 'util';
 
 interface Class { name: string; description: string; type: string; archtype?: string; moves: string[]; }
 interface Move {
@@ -13,9 +14,8 @@ interface Move {
   classRace: string;
   category: string;
   extras: ConEff[];
-  // extras_max_index?: number;
 }
-interface ConEff { /*index: number;*/ condition: string; effect: string; }
+interface ConEff { condition: string; effect: string; }
 
 @Component({
   selector: 'app-moves',
@@ -31,7 +31,7 @@ export class MovesComponent implements OnInit {
   moves: any;
 
   selectedMove: any;
-  load: boolean = true;
+  load = false;
 
   currentMove: Move = {
     name: '',
@@ -43,11 +43,7 @@ export class MovesComponent implements OnInit {
     extras: [],
     // extras_max_index: 0
   };
-  extras: ConEff[] = [
-    // {index: 0, condition: 'Saeros', effect: 'Lasts for 4 turns.'},
-    // {index: 1, condition: 'Gray Sage', effect: 'Cast Massive on a team.'},
-    // {index: 2, condition: 'Gray Mentor', effect: 'Turn by turn you play 4 extra turns.'}
-  ];
+  extras: ConEff[] = [];
 
   constructor(public auth: AuthService) { }
 
@@ -72,26 +68,46 @@ export class MovesComponent implements OnInit {
 
   removeExtra(i: number) {
     this.extras.splice(i, 1);
-    // this.currentMove.extras_max_index = this.extras.length;
-    // let index = 0;
-    // this.extras.forEach(element => {
-    //   element.index = index++;
-    // });
   }
   addExtra() {
-    // const index = this.currentMove.extras_max_index++;
     this.extras.push( {/*index: index,*/ condition: '', effect: ''} );
   }
 
   submitMove() {
     const move = this.currentMove;
     const extras = this.extras;
+    if (move.name === '') { alert('You can not have a nameless move.'); return; }
+    let movesOK = true;
+    let extrasOK = true;
+    for (const key in move) {
+      if (move[key] === '') {
+        movesOK = false;
+      }
+    }
+    if (movesOK === false) {
+      const message = 'You not filled all areas in this move. Are you sure you want to continue?';
+      movesOK = confirm(message);
+    }
+    if (movesOK === false) { alert('Move addition aborted'); return; }
+    for (const i in extras) {
+      if (extras[i].condition === '' || extras[i].effect === '') {
+        extrasOK = false;
+      }
+    }
+    if (extrasOK === false) {
+      const message = 'You have empty areas in this move\'s extras. Are you sure you want to continue?';
+      extrasOK = confirm(message);
+    }
+    if (extrasOK === false) { alert('Move addition aborted'); return; }
     move.extras = extras;
-    // const extras = this.extras;
-    // move.extras = extras;
-    console.log('move:');
-    console.log(move);
-    // console.log('extras:');
-    // console.log(this.extras);
+    this.uploadMove(move);
+  }
+  uploadMove ( moveData ) {
+    console.log('entered uploadMove');
+    if (this.movesCol) {
+      this.movesCol.doc(this.currentMove.name).set( moveData )
+        .then( () => console.log( 'Move successfully uploaded :)' ) )
+        .catch( (uploadError) => {console.log('Error while uploading the move.'); console.log(uploadError); } );
+    }
   }
 }
