@@ -23,16 +23,24 @@ interface ConEff { condition: string; effect: string; }
   styleUrls: ['./moves.component.css']
 })
 export class MovesComponent implements OnInit {
+  // Consts
   categories = ['Class move', 'Boss move', 'Special move'];
   types = [ 'Command', 'Attack', 'Skill', 'Spell', 'Call', 'Call (Summon)', 'Ability', 'Trait' ];
 
+  // Firestore Refs
+  classesCol: any;
   classes: any;
   movesCol: any;
   moves: any;
+  // Firestore shorthands (smaller collections containing only the ids)
+  classesColSH: any;
+  classesSH: any;
+  movesColSH: any;
+  movesSH: any;
 
+  // page
   selectedMove: any;
-  load = false;
-
+  load = true;
   currentMove: Move = {
     name: '',
     cost: '',
@@ -41,22 +49,17 @@ export class MovesComponent implements OnInit {
     classRace: '',
     category: '',
     extras: [],
-    // extras_max_index: 0
   };
   extras: ConEff[] = [];
 
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
+    this.movesCol = this.auth.getMovesRef();
+    this.moves = this.movesCol.valueChanges();
+    this.load = true;
   }
-
-  fillList() {
-    this.movesCol.doc('Haste').set({name: 'Haste'});
-    this.movesCol.doc('Regen').set({name: 'Regen'});
-    this.movesCol.doc('Float').set({name: 'Float'});
-    this.movesCol.doc('Kalankas').set({name: 'Kalankas'});
-    this.movesCol.doc('Meteo').set({name: 'Meteo'});
-  }
+  
   setSelection( moveName ) {
     this.selectedMove = moveName;
   }
@@ -103,7 +106,6 @@ export class MovesComponent implements OnInit {
     this.uploadMove(move.name, move);
   }
   uploadMove ( name: string, moveData ) {
-    console.log('entered uploadMove');
     if (this.movesCol) {
       this.movesCol.doc(name).set( moveData )
         .then( () => console.log( 'Move successfully uploaded :)' ) )

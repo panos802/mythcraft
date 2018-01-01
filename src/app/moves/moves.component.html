@@ -3,52 +3,52 @@
 
 <!-- Loaded -->
 <ng-template #loaded>
- <div>
-  <button (click)='fillList()'>Fill List</button>
-</div>
 
-<div class="moves-wrapper">
-  <!-- <div>
-    <strong>Selected Move: </strong> {{ selectedMove }}
-  </div>
-  <div>
+<div class="moves-wrapper white space">
+  <!-- <button (click)='loadList()'>Fill List</button> <br>   -->
+  <div class="moves-list-wrapper space">
+    <div>
+      <strong>Selected Move: </strong> {{ selectedMove }}
+    </div>
     <ul class="moves-list" *ngFor="let move of moves | async">
       <li (click)='setSelection( move.name )' class="moves-list-item">
-        {{ move.name }} <strong>{{move.cost}}</strong>
+        {{ move.name }}
       </li>
     </ul>
-  </div> -->
+  </div>
 <!-- CREATE MOVE -->
-  <div>
-    <input type="text" name="name" placeholder="name" [(ngModel)]='currentMove.name'><br>
-    <input type="text" name="cost" placeholder="ex...12 mp" [(ngModel)]='currentMove.cost'><br>
-    <input type="text" name="class/race" placeholder="classes and/or races..." [(ngModel)]='currentMove.classRace'> <br>
+  <div class="move-wrapper space">
+    <input type="text" name="name" placeholder="Name" [(ngModel)]='currentMove.name'><br>
+    <input type="text" name="cost" placeholder="Cost...ex .12 MP" [(ngModel)]='currentMove.cost'><br>
+    <input type="text" name="class/race" placeholder="Classes and/or Races..." [(ngModel)]='currentMove.classRace'> <br>
     <select name="type" [(ngModel)]='currentMove.type'>
+      <option class="grey" value="" disabled selected>Type</option>
       <option *ngFor='let type of types' [ngValue]='type'> {{type}} </option>
     </select> <br>
     <select name="category" [(ngModel)]='currentMove.category'>
+      <option class="grey" value="" disabled selected>Category</option>
       <option *ngFor='let category of categories' [ngValue]='category'> {{category}} </option>
     </select>
     <div>
-      <textarea name="effect" placeholder="effect..." [(ngModel)]='currentMove.effect'>
+      <textarea name="effect" placeholder="Effect..." [(ngModel)]='currentMove.effect'>
         {{currentMove.effect}}
       </textarea>
       <div *ngFor="let extra of extras; let i=index;">
         <!-- <input type="number" [(ngModel)]='currentMove.extras[i].index'/> -->
-        <input type="text" [(ngModel)]='extra.condition'/>
-        <input type="text" [(ngModel)]='extra.effect'/>
+        <input type="text" [(ngModel)]='extra.condition' placeholder="Condition"/>
+        <input type="text" [(ngModel)]='extra.effect' placeholder="Effect"/>
         <button type="button" (click)="removeExtra(i)">remove</button>
       </div>
       <button type="button" (click)="addExtra()">Add extra</button>
     </div> 
     <br>
-    <button (click)='submitMove()'>Submit</button>
-    <div class="json">
+    <button (click)='submitMove()'>Upload Move</button>
+    <!-- <div class="white">
       {{currentMove | json}}
     </div>
-    <div class="json">
+    <div class="white">
       {{extras | json}}
-    </div>
+    </div> -->
   </div>
 <!-- create move END -->
 </div>

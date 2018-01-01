@@ -1,7 +1,33 @@
 .moves-wrapper {
-    /* display: flex; */
+    display: flex;
+    width: 50%;
+    margin: 10px;
 }
 
-.json {
+.move-wrapper {
+    flex: 2;
+}
+.moves-list-wrapper {
+    flex: 1;
+    outline: solid white 2px;
+    outline-style: inset;
+}
+
+.moves-list {
+    list-style-type: none;
+}
+.moves-list li {
+    padding: 2px;
+}
+
+.white {
     color: white;
+}
+.grey {
+    color: grey;
+}
+
+.space {
+    padding: 15px;
+    margin: 10px;
 }
