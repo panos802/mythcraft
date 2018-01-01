@@ -7,15 +7,15 @@ import { forEach } from '@angular/router/src/utils/collection';
 interface Class { name: string; description: string; type: string; archtype?: string; moves: string[]; }
 interface Move {
   name: string;
-  cost?: string;
-  type?: string;
+  cost: string;
+  type: string;
   effect: string;
   classRace: string;
-  category?: string;
-  extras?: ConEff[];
-  extras_max_index?: number;
+  category: string;
+  extras: ConEff[];
+  // extras_max_index?: number;
 }
-interface ConEff { index: number; condition: string; effect: string; }
+interface ConEff { /*index: number;*/ condition: string; effect: string; }
 
 @Component({
   selector: 'app-moves',
@@ -41,7 +41,7 @@ export class MovesComponent implements OnInit {
     classRace: '',
     category: '',
     extras: [],
-    extras_max_index: 0
+    // extras_max_index: 0
   };
   extras: ConEff[] = [
     // {index: 0, condition: 'Saeros', effect: 'Lasts for 4 turns.'},
@@ -72,21 +72,26 @@ export class MovesComponent implements OnInit {
 
   removeExtra(i: number) {
     this.extras.splice(i, 1);
-    this.currentMove.extras_max_index = this.extras.length;
-    let index = 0;
-    this.extras.forEach(element => {
-      element.index = index++;
-    });
+    // this.currentMove.extras_max_index = this.extras.length;
+    // let index = 0;
+    // this.extras.forEach(element => {
+    //   element.index = index++;
+    // });
   }
   addExtra() {
-    const index = this.currentMove.extras_max_index++;
-    this.extras.push( {index: index, condition: '', effect: ''} );
+    // const index = this.currentMove.extras_max_index++;
+    this.extras.push( {/*index: index,*/ condition: '', effect: ''} );
   }
 
   submitMove() {
+    const move = this.currentMove;
+    const extras = this.extras;
+    move.extras = extras;
+    // const extras = this.extras;
+    // move.extras = extras;
     console.log('move:');
-    console.log(this.currentMove);
-    console.log('extras:');
-    console.log(this.extras);
+    console.log(move);
+    // console.log('extras:');
+    // console.log(this.extras);
   }
 }

@@ -34,15 +34,21 @@
         {{currentMove.effect}}
       </textarea>
       <div *ngFor="let extra of extras; let i=index;">
-        <input type="number" [(ngModel)]='extras[i].index'/>
-        <input type="text" [(ngModel)]='extras[i].condition'/>
-        <input type="text" [(ngModel)]='extras[i].effect'/>
+        <!-- <input type="number" [(ngModel)]='currentMove.extras[i].index'/> -->
+        <input type="text" [(ngModel)]='extra.condition'/>
+        <input type="text" [(ngModel)]='extra.effect'/>
         <button type="button" (click)="removeExtra(i)">remove</button>
       </div>
       <button type="button" (click)="addExtra()">Add extra</button>
     </div> 
     <br>
     <button (click)='submitMove()'>Submit</button>
+    <div class="json">
+      {{currentMove | json}}
+    </div>
+    <div class="json">
+      {{extras | json}}
+    </div>
   </div>
 <!-- create move END -->
 </div>
