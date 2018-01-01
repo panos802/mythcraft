@@ -8,7 +8,7 @@
 </div>
 
 <div class="moves-wrapper">
-  <div>
+  <!-- <div>
     <strong>Selected Move: </strong> {{ selectedMove }}
   </div>
   <div>
@@ -17,25 +17,32 @@
         {{ move.name }} <strong>{{move.cost}}</strong>
       </li>
     </ul>
-  </div>
+  </div> -->
 <!-- CREATE MOVE -->
   <div>
-    <form class="move-form"
-      #userForm="ngForm"
-      (ngSubmit)='onSubmit(userForm.value)'>
-      <input (keydown.enter)='$event.preventDefault()' type="text" name="name" placeholder="name" ngModel required><br>
-      <input (keydown.enter)='$event.preventDefault()' type="text" name="cost" placeholder="ex...12 mp" ngModel><br>
-      <input (keydown.enter)='$event.preventDefault()' type="text" name="class/race" placeholder="class or race..." ngModel> <br>
-      <select name="type" ngModel>
-        <option *ngFor='let type of types' [ngValue]='type'> {{type}} </option>
-      </select> <br>
-      <select name="category" ngModel>
-        <option *ngFor='let category of categories' [ngValue]='category'> {{category}} </option>
-      </select> <br>
-      <textarea name="effect" placeholder="effect..." ngModel></textarea> 
-      <br> <br>
-      <input type="submit" value="submit">
-    </form>
+    <input type="text" name="name" placeholder="name" [(ngModel)]='currentMove.name'><br>
+    <input type="text" name="cost" placeholder="ex...12 mp" [(ngModel)]='currentMove.cost'><br>
+    <input type="text" name="class/race" placeholder="class or race..." [(ngModel)]='currentMove.classRace'> <br>
+    <select name="type" [(ngModel)]='currentMove.type'>
+      <option *ngFor='let type of types' [ngValue]='type'> {{type}} </option>
+    </select> <br>
+    <select name="category" [(ngModel)]='currentMove.category'>
+      <option *ngFor='let category of categories' [ngValue]='category'> {{category}} </option>
+    </select>
+    <div>
+      <textarea name="effect" placeholder="effect..." [(ngModel)]='currentMove.effect'>
+        {{currentMove.effect}}
+      </textarea>
+      <div *ngFor="let extra of extras; let i=index;">
+        <input type="number" [(ngModel)]='extras[i].index'/>
+        <input type="text" [(ngModel)]='extras[i].condition'/>
+        <input type="text" [(ngModel)]='extras[i].effect'/>
+        <button type="button" (click)="removeExtra(i)">remove</button>
+      </div>
+      <button type="button" (click)="addExtra()">Add extra</button>
+    </div> 
+    <br>
+    <button (click)='submitMove()'>Submit</button>
   </div>
 <!-- create move END -->
 </div>

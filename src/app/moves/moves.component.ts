@@ -2,27 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NgClass } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
+import { forEach } from '@angular/router/src/utils/collection';
 
-interface Class {
-  name: string;
-  description: string;
-  type: string;
-  archtype?: string;
-  moves: string[];
-}
+interface Class { name: string; description: string; type: string; archtype?: string; moves: string[]; }
 interface Move {
   name: string;
   cost?: string;
   type?: string;
   effect: string;
-  classes?: string;
+  classRace: string;
   category?: string;
   extras?: ConEff[];
-  extras_max_index: number;
+  extras_max_index?: number;
 }
-interface ConEff {
-  index: number; condition: string; effect: string;
-}
+interface ConEff { index: number; condition: string; effect: string; }
 
 @Component({
   selector: 'app-moves',
@@ -31,34 +24,30 @@ interface ConEff {
 })
 export class MovesComponent implements OnInit {
   categories = ['Class move', 'Boss move', 'Special move'];
-  types = [
-    'Command',
-    'Attack',
-    'Skill',
-    'Spell',
-    'Call',
-    'Call (Summon)',
-    'Ability',
-    'Trait'
-  ];
+  types = [ 'Command', 'Attack', 'Skill', 'Spell', 'Call', 'Call (Summon)', 'Ability', 'Trait' ];
 
   classes: any;
   movesCol: any;
   moves: any;
 
   selectedMove: any;
-  load: boolean = false;
+  load: boolean = true;
 
   currentMove: Move = {
     name: '',
     cost: '',
     type: '',
     effect: '',
-    classes: '',
+    classRace: '',
     category: '',
     extras: [],
     extras_max_index: 0
   };
+  extras: ConEff[] = [
+    // {index: 0, condition: 'Saeros', effect: 'Lasts for 4 turns.'},
+    // {index: 1, condition: 'Gray Sage', effect: 'Cast Massive on a team.'},
+    // {index: 2, condition: 'Gray Mentor', effect: 'Turn by turn you play 4 extra turns.'}
+  ];
 
   constructor(public auth: AuthService) { }
 
@@ -72,20 +61,32 @@ export class MovesComponent implements OnInit {
     this.movesCol.doc('Kalankas').set({name: 'Kalankas'});
     this.movesCol.doc('Meteo').set({name: 'Meteo'});
   }
-
   setSelection( moveName ) {
     this.selectedMove = moveName;
   }
-
   loadList() {
     this.movesCol = this.auth.getMovesRef();
     this.moves = this.movesCol.valueChanges();
     this.load = true;
   }
 
-  onSubmit( userForm ) {
-    console.log(userForm);
+  removeExtra(i: number) {
+    this.extras.splice(i, 1);
+    this.currentMove.extras_max_index = this.extras.length;
+    let index = 0;
+    this.extras.forEach(element => {
+      element.index = index++;
+    });
+  }
+  addExtra() {
+    const index = this.currentMove.extras_max_index++;
+    this.extras.push( {index: index, condition: '', effect: ''} );
   }
 
-
+  submitMove() {
+    console.log('move:');
+    console.log(this.currentMove);
+    console.log('extras:');
+    console.log(this.extras);
+  }
 }
