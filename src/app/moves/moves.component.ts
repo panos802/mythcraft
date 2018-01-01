@@ -100,12 +100,12 @@ export class MovesComponent implements OnInit {
     }
     if (extrasOK === false) { alert('Move addition aborted'); return; }
     move.extras = extras;
-    this.uploadMove(move);
+    this.uploadMove(move.name, move);
   }
-  uploadMove ( moveData ) {
+  uploadMove ( name: string, moveData ) {
     console.log('entered uploadMove');
     if (this.movesCol) {
-      this.movesCol.doc(this.currentMove.name).set( moveData )
+      this.movesCol.doc(name).set( moveData )
         .then( () => console.log( 'Move successfully uploaded :)' ) )
         .catch( (uploadError) => {console.log('Error while uploading the move.'); console.log(uploadError); } );
     }
