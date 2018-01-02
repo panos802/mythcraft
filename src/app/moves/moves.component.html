@@ -4,45 +4,50 @@
 <!-- Loaded -->
 <ng-template #loaded>
 
-<div class="moves-wrapper white space">
+<div class="moves-wrapper white">
   <!-- <button (click)='loadList()'>Fill List</button> <br>   -->
-  <div class="moves-list-wrapper space">
+  <div class="moves-list-wrapper soft-padded">
     <div>
-      <strong>Selected Move: </strong> {{ selectedMove }}
+      <form id="filter">
+        <label>Moogle Search:</label>
+        <input name="moogleSearch" type="text" [(ngModel)]='moogleSearch'/>
+      </form>
     </div>
     <ul class="moves-list" *ngFor="let move of moves | async">
       <li (click)='setSelection( move.name )' class="moves-list-item">
-        {{ move.name }}
+        {{ move.name }} {{ move?.cost }}
       </li>
     </ul>
   </div>
 <!-- CREATE MOVE -->
-  <div class="move-wrapper space">
-    <input type="text" name="name" placeholder="Name" [(ngModel)]='currentMove.name'><br>
-    <input type="text" name="cost" placeholder="Cost...ex .12 MP" [(ngModel)]='currentMove.cost'><br>
-    <input type="text" name="class/race" placeholder="Classes and/or Races..." [(ngModel)]='currentMove.classRace'> <br>
-    <select name="type" [(ngModel)]='currentMove.type'>
+  <div class="move-container ">
+    <input class="cell-1" type="text" name="name" placeholder="Name" [(ngModel)]='currentMove.name'>
+    <input class="cell-2" type="text" name="cost" placeholder="Cost...ex .12 MP" [(ngModel)]='currentMove.cost'>
+    <input class="cell-3" type="text" name="class/race" placeholder="Classes and/or Races..." [(ngModel)]='currentMove.classRace'>
+    <select class="cell-4" name="type" [(ngModel)]='currentMove.type'>
       <option class="grey" value="" disabled selected>Type</option>
       <option *ngFor='let type of types' [ngValue]='type'> {{type}} </option>
     </select> <br>
-    <select name="category" [(ngModel)]='currentMove.category'>
+    <select class="cell-5" name="category" [(ngModel)]='currentMove.category'>
       <option class="grey" value="" disabled selected>Category</option>
       <option *ngFor='let category of categories' [ngValue]='category'> {{category}} </option>
     </select>
-    <div>
-      <textarea name="effect" placeholder="Effect..." [(ngModel)]='currentMove.effect'>
+    <div class="cell-6">
+      <textarea id="effect" class="soft-padded" name="effect" placeholder="Effect..." [(ngModel)]='currentMove.effect'>
         {{currentMove.effect}}
       </textarea>
-      <div *ngFor="let extra of extras; let i=index;">
-        <!-- <input type="number" [(ngModel)]='currentMove.extras[i].index'/> -->
-        <input type="text" [(ngModel)]='extra.condition' placeholder="Condition"/>
-        <input type="text" [(ngModel)]='extra.effect' placeholder="Effect"/>
-        <button type="button" (click)="removeExtra(i)">remove</button>
+      <div class="exConEff" *ngFor="let extra of extras; let i=index;">
+        <pre class="exIndex"> {{i+1}} </pre>
+        <textarea class="exCon soft-padded" [(ngModel)]='extra.condition' rows="3" placeholder="Condition"></textarea>
+        <textarea class="exEff soft-padded" [(ngModel)]='extra.effect'    rows="3" placeholder="Effect"   ></textarea>
+        <!-- TRASH ICON in this line below -->
+        <button class="exRem" type="button" (click)="removeExtra(i)"><pre> remove </pre></button>
       </div>
-      <button type="button" (click)="addExtra()">Add extra</button>
-    </div> 
-    <br>
-    <button (click)='submitMove()'>Upload Move</button>
+      <div id="addExtra">
+        <button type="button" (click)="addExtra()"><strong>Add</strong></button>
+      </div>
+    </div>
+    <button class="cell-7" (click)='submitMove()'><strong> Upload Move </strong></button> 
     <!-- <div class="white">
       {{currentMove | json}}
     </div>

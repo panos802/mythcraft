@@ -1,33 +1,81 @@
 .moves-wrapper {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
-    width: 50%;
-    margin: 10px;
+}
+.move-container {
+    flex: 4;
+    padding: 20px;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) ;
+    grid-template-rows: 30px 30px 1fr 30px ;
+    grid-template-areas: 
+        "name      name      cost      type    "
+        "classRace classRace classRace category"
+        "effects   effects   effects   effects "
+        ".         .         .         button  ";
+    grid-gap: 5px;
+
+    background-color: rgba(128, 128, 128, 0.5);
+}
+.cell-1 { grid-area: name; }
+.cell-2 { grid-area: cost; }
+.cell-3 { grid-area: classRace; }
+.cell-4 { grid-area: type; }
+.cell-5 { grid-area: category; }
+.cell-6 { grid-area: effects; overflow: auto; border: solid white 1px}
+.cell-7 { grid-area: button; }
+
+#effect {
+    display: block;
+    width: 100%;
+    height: 300px;
+    resize: none;
+}
+.exConEff { 
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    /* align-items: stretch;
+    justify-content: center; */
+}
+.exCon { flex: 1; resize: none; }
+.exEff { flex: 2; resize: none; }
+.exIndex { padding-top: 10px; }
+
+#addExtra {
+    width: 100%;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    background-color: rgb(197, 197, 197);
+}
+#addExtra button {
+    padding: 15px;
+    background-color: rgb(163, 163, 163);
+    color: rgb(50, 50, 50);
+    border: solid rgb(58, 58, 58) 2px;
+    border-radius: 30px;
 }
 
-.move-wrapper {
-    flex: 2;
-}
 .moves-list-wrapper {
     flex: 1;
     outline: solid white 2px;
     outline-style: inset;
 }
+.moves-list { list-style-type: none; }
+.moves-list li { padding: 2px; }
 
-.moves-list {
-    list-style-type: none;
-}
-.moves-list li {
-    padding: 2px;
-}
-
-.white {
-    color: white;
-}
-.grey {
-    color: grey;
-}
-
+.white { color: white; }
 .space {
     padding: 15px;
     margin: 10px;
+}
+.soft-padded {
+    padding: 1%;
 }

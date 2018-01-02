@@ -24,8 +24,10 @@ interface ConEff { condition: string; effect: string; }
 })
 export class MovesComponent implements OnInit {
   // Consts
-  categories = ['Class move', 'Boss move', 'Special move'];
-  types = [ 'Command', 'Attack', 'Skill', 'Spell', 'Call', 'Call (Summon)', 'Ability', 'Trait' ];
+  categories = ['Class move', 'Racial move', 'Special move'];
+  types = [ 'Command', 'Attack', 'Skill', 'Spell', 'Call', 'Call (Eidolon)', 'Ability', 'Trait' ];
+
+  classCategories = ['Επίλεκτος', 'Σοφός', 'Ειδήμονας', 'Φάντασμα'];
 
   // Firestore Refs
   classesCol: any;
@@ -39,6 +41,7 @@ export class MovesComponent implements OnInit {
   movesSH: any;
 
   // page
+  moogleSearch = '';
   selectedMove: any;
   load = true;
   currentMove: Move = {
@@ -59,7 +62,7 @@ export class MovesComponent implements OnInit {
     this.moves = this.movesCol.valueChanges();
     this.load = true;
   }
-  
+
   setSelection( moveName ) {
     this.selectedMove = moveName;
   }
@@ -70,6 +73,8 @@ export class MovesComponent implements OnInit {
   }
 
   removeExtra(i: number) {
+    const message = 'Remove this extra effect?';
+    // if (!confirm(message)) { return; }
     this.extras.splice(i, 1);
   }
   addExtra() {
@@ -83,12 +88,12 @@ export class MovesComponent implements OnInit {
     let movesOK = true;
     let extrasOK = true;
     for (const key in move) {
-      if (move[key] === '') {
+      if (move[key] === '' && key !== 'cost') {
         movesOK = false;
       }
     }
     if (movesOK === false) {
-      const message = 'You not filled all areas in this move. Are you sure you want to continue?';
+      const message = 'You have not filled all areas in this move. Are you sure you want to continue?';
       movesOK = confirm(message);
     }
     if (movesOK === false) { alert('Move addition aborted'); return; }
@@ -103,11 +108,12 @@ export class MovesComponent implements OnInit {
     }
     if (extrasOK === false) { alert('Move addition aborted'); return; }
     move.extras = extras;
-    this.uploadMove(move.name, move);
+    console.log(move.name, move);
+    // this.uploadMove(move.name, move);
   }
   uploadMove ( name: string, moveData ) {
     if (this.movesCol) {
-      this.movesCol.doc(name).set( moveData )
+      this.movesCol.doc(name.toLowerCase).set( moveData )
         .then( () => console.log( 'Move successfully uploaded :)' ) )
         .catch( (uploadError) => {console.log('Error while uploading the move.'); console.log(uploadError); } );
     }
