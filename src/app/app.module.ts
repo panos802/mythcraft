@@ -14,6 +14,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
 import { UsersListComponent } from './users-list/users-list.component';
 import { MovesComponent } from './moves/moves.component';
+import { FilterPipe } from './filter.pipe';
 
 
 const firebaseConfig = {
@@ -35,7 +36,8 @@ const routes: Routes = [
     AppComponent,
     UserProfileComponent,
     UsersListComponent,
-    MovesComponent
+    MovesComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@
         ".         .         .         button  ";
     grid-gap: 5px;
 
-    background-color: rgba(128, 128, 128, 0.5);
+    /* background-color: rgba(128, 128, 128, 0.5); */
 }
 .cell-1 { grid-area: name; }
 .cell-2 { grid-area: cost; }
@@ -60,7 +60,7 @@
     background-color: rgb(163, 163, 163);
     color: rgb(50, 50, 50);
     border: solid rgb(58, 58, 58) 2px;
-    border-radius: 30px;
+    border-radius: 50%;
 }
 
 .moves-list-wrapper {
@@ -68,7 +68,7 @@
     outline: solid white 2px;
     outline-style: inset;
 }
-.moves-list { list-style-type: none; }
+.moves-list { list-style-type: none; overflow: auto;}
 .moves-list li { padding: 2px; }
 
 .white { color: white; }
@@ -78,4 +78,12 @@
 }
 .soft-padded {
     padding: 1%;
+}
+.hard-padded {
+    padding: 3px;
+}
+
+#moogleSearch {
+    padding: 5px;
+    border-radius: 10px;
 }

@@ -10,11 +10,11 @@
     <div>
       <form id="filter">
         <label>Moogle Search:</label>
-        <input name="moogleSearch" type="text" [(ngModel)]='moogleSearch'/>
+        <input id="moogleSearch" name="moogleSearch" type="text" [(ngModel)]='moogleSearch'/>
       </form>
     </div>
-    <ul class="moves-list" *ngFor="let move of moves | async">
-      <li (click)='setSelection( move.name )' class="moves-list-item">
+    <ul class="moves-list soft-padded" *ngFor="let move of moves | async | filter:moogleSearch ">
+      <li class="moves-list-item" (click)='setSelection( move.name )' >
         {{ move.name }} {{ move?.cost }}
       </li>
     </ul>
@@ -44,7 +44,7 @@
         <button class="exRem" type="button" (click)="removeExtra(i)"><pre> remove </pre></button>
       </div>
       <div id="addExtra">
-        <button type="button" (click)="addExtra()"><strong>Add</strong></button>
+        <button type="button" (click)="addExtra()"><strong><pre> + </pre></strong></button>
       </div>
     </div>
     <button class="cell-7" (click)='submitMove()'><strong> Upload Move </strong></button> 
