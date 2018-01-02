@@ -34,6 +34,7 @@ export class MovesComponent implements OnInit {
   classes: any;
   movesCol: any;
   moves: any;
+  selectedMoveDoc: any;
   // Firestore shorthands (smaller collections containing only the ids)
   classesColSH: any;
   classesSH: any;
@@ -65,6 +66,7 @@ export class MovesComponent implements OnInit {
 
   setSelection( moveName ) {
     this.selectedMove = moveName;
+    // this.selectedMoveDoc = this.movesCol.doc(`${moveName.toLowerCase}`);
   }
   loadList() {
     this.movesCol = this.auth.getMovesRef();

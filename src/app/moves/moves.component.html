@@ -13,6 +13,9 @@
         <input id="moogleSearch" name="moogleSearch" type="text" [(ngModel)]='moogleSearch'/>
       </form>
     </div>
+    <div class="soft-padded">
+      <strong> <pre>Selected: {{selectedMove}}</pre> </strong>
+    </div>
     <ul class="moves-list soft-padded" *ngFor="let move of moves | async | filter:moogleSearch ">
       <li class="moves-list-item" (click)='setSelection( move.name )' >
         {{ move.name }} {{ move?.cost }}
@@ -56,6 +59,13 @@
     </div> -->
   </div>
 <!-- create move END -->
+</div>
+</ng-template>
+
+<!-- Selected Move -->
+<ng-template #selectedMove>
+<div *ngIf='selectedMove !== null'>
+  
 </div>
 </ng-template>
 
